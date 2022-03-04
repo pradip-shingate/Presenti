@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -16,21 +17,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Presenti"
         android:usesCleartextTraffic="true">
-
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
+        <activity
+            android:name=".view.NoteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Presenti.NoActionBar"/>
+        <activity
+            android:name=".view.MarkAttendanceActivity"
+            android:exported="true"
+            android:label="@string/title_activity_mark_attendance"
+            android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.ScanQRActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Presenti.NoActionBar" />
+        <activity
+            android:name=".barcodescanner.MerchantScannerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.LoginActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.IntroActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.SplashScreenActivity"
             android:exported="true"

@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         val request = Request.Builder()
-            .url("http://api.presenti.lo-yo.in/api/Employee/SendOtpToMobileNumber?MobileNo=9766934468&Otp=7565&BusinessId=1")
+            .url("http://api.presenti.lo-yo.in/api/Business/SendOtpToMobileNumber?MobileNo=9766934468&Otp=7565&BusinessId=1")
             .post(formBody)
             .build()
 
@@ -100,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Log.d("Success", "Success: $response")
                         startActivity(Intent(this@LoginActivity,ScanQRActivity::class.java))
+                        finish()
                     }
                 }
             }

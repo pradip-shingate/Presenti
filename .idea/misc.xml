@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/drawable/button_style.xml" value="0.25925925925925924" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_barcode_scanner.xml" value="0.1234375" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_intro.xml" value="0.2" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_mark_attendance.xml" value="0.11979166666666667" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_mark_attendance2.xml" value="0.11979166666666667" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_note.xml" value="0.13020833333333334" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_scan_qractivity.xml" value="0.2" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/My Projects/Projects/Presenti/app/src/main/res/xml/network_config.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

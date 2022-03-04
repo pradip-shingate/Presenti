@@ -28,20 +28,10 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:visibility="visible"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/log_out"
-            app:srcCompat="@drawable/language" />
-
-        <ImageView
-            android:id="@+id/log_out"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:visibility="visible"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/button_style"
             android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/log_out" />
+            app:srcCompat="@drawable/language" />
 
     </RelativeLayout>
 
@@ -83,39 +73,87 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <ImageView
-        android:id="@+id/barcode"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogIn"
+        android:background="@drawable/button_style"
         android:visibility="visible"
-        app:srcCompat="@drawable/qr"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
+        android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/user_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
-        android:id="@+id/click_here"
+        android:id="@+id/last_in_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click here to scan QR"
+        android:text="Last IN Time"
         android:visibility="visible"
-        android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@+id/barcode"
+        android:textSize="20sp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
-        android:id="@+id/remote"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Remotely"
-        android:visibility="visible"
+        android:text="LogOut"
         android:background="@drawable/button_style"
+        android:visibility="visible"
         android:layout_marginTop="35dp"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/click_here"
+        app:layout_constraintTop_toBottomOf="@+id/last_in_time"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/last_out_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last OUT Time"
+        android:visibility="visible"
+        android:textSize="20sp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/logout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/last_out_time"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
+            android:background="@drawable/button_style"
+            android:layout_gravity="left"
+            android:layout_marginRight="25dp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_gravity="right"
+            android:enabled="false"
+            android:background="@drawable/button_style"
+            android:text="Photo"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

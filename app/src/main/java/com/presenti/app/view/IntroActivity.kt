@@ -17,6 +17,7 @@ class IntroActivity : AppCompatActivity() {
         val txtView=findViewById<TextView>(R.id.text_next)
         txtView.setOnClickListener {
             startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+            finish()
         }
     }
 }
