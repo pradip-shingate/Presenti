@@ -6,35 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.ScanQRActivity">
 
-    <RelativeLayout
-        android:id="@+id/top_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <include
+        layout="@layout/top_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/app_icon"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/icon"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"/>
-
-        <ImageView
-            android:id="@+id/language"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:visibility="visible"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_style"
-            android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/language" />
-
-    </RelativeLayout>
-
+    </include>
 
     <TextView
         android:id="@+id/company_name"
@@ -42,6 +20,7 @@
         android:layout_height="wrap_content"
         android:text="MY LOZO TECH PVT LTD"
         android:visibility="visible"
+        android:textColor="@color/blue"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginTop="35dp"
@@ -75,10 +54,10 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="LogIn"
-        android:background="@drawable/button_style"
+        style="@style/PresentiButton"
         android:visibility="visible"
         android:layout_marginTop="35dp"
         android:textAllCaps="false"
@@ -100,10 +79,10 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="LogOut"
-        android:background="@drawable/button_style"
+        style="@style/PresentiButton"
         android:visibility="visible"
         android:layout_marginTop="35dp"
         android:textAllCaps="false"
@@ -134,17 +113,17 @@
 
         <Button
             android:id="@+id/note"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Note"
-            android:background="@drawable/button_style"
+            style="@style/PresentiButton"
             android:layout_gravity="left"
             android:layout_marginRight="25dp"
             android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/photo"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_gravity="right"
