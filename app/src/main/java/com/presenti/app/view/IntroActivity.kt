@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import com.presenti.app.R
-import okhttp3.OkHttpClient
 
 class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

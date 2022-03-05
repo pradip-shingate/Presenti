@@ -1,4 +1,4 @@
-package com.presenti.app.barcodescanner;
+package com.presenti.app.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

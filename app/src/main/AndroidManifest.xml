@@ -20,31 +20,38 @@
         <activity
             android:name=".view.NoteActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar"/>
         <activity
             android:name=".view.MarkAttendanceActivity"
             android:exported="true"
             android:label="@string/title_activity_mark_attendance"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.ScanQRActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".barcodescanner.MerchantScannerActivity"
+            android:name=".view.MerchantScannerActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.LoginActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.IntroActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
             android:name=".view.SplashScreenActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
