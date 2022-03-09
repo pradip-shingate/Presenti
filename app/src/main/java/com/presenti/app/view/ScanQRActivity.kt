@@ -4,22 +4,29 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.material.snackbar.Snackbar
 import com.presenti.app.R
+import com.presenti.app.model.EmployeeRepository
+import com.presenti.app.model.NetworkHelper
+import com.presenti.app.model.UserDetails
+import com.presenti.app.presenter.NetworkResponseListener
 import java.io.IOException
 
 
-class ScanQRActivity : AppCompatActivity() {
+class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
 
-    val REQUEST_CAMERA_PERMISSION = 7;
+    val REQUEST_CAMERA_PERMISSION = 700;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +63,9 @@ class ScanQRActivity : AppCompatActivity() {
         buttonRemoteLogin.setOnClickListener {
 
         }
+
+        findViewById<TextView>(R.id.user_name).text =
+            "Hi, " + EmployeeRepository.employee.data?.empName
     }
 
     override fun onRequestPermissionsResult(
@@ -82,10 +92,18 @@ class ScanQRActivity : AppCompatActivity() {
     private var someActivityResultLauncher = registerForActivityResult(
         StartActivityForResult()
     ) { result ->
-        val str = result.data?.getStringExtra("barcode_data")
-        Log.d("Test", "Barcode kotlin: " + str)
-        if (!TextUtils.isEmpty(str))
-            startActivity(Intent(this@ScanQRActivity, MarkAttendanceActivity::class.java))
+        val str: String? = result.data?.getStringExtra("barcode_data")
+        Log.d("Test", "Barcode kotlin: $str")
+
+        str?.let {
+            val id = Uri.parse(it).getQueryParameter("BusinessQRCodeId")
+            if (!TextUtils.isEmpty(id) && TextUtils.isDigitsOnly(id) && Integer.parseInt(id) > 0) {
+                NetworkHelper().validateUser(
+                    "http://api.presenti.lo-yo.in/api/Business/GetBusinessIdByQRCode?BusinessQRCodeId=$id",
+                    this
+                )
+            }
+        }
     }
 
     private fun showAlertMessage(title: String, message: String) {
@@ -100,4 +118,22 @@ class ScanQRActivity : AppCompatActivity() {
         alert.show()
     }
 
+    override fun onNetworkSuccess(o: Object?) {
+        o?.let {
+            if (o is UserDetails && EmployeeRepository.employee.data?.businessId == o.data && EmployeeRepository.employee.data?.isActive == false) {
+                startActivity(Intent(this@ScanQRActivity, MarkAttendanceActivity::class.java))
+            } else {
+                showSnackBar("Invalid user.")
+            }
+        }
+    }
+
+    override fun onNetworkFailure(o: Object?) {
+        showSnackBar("Network error.Please try again.")
+    }
+
+    private fun showSnackBar(message: String) {
+        val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
+        snackBar.show()
+    }
 }

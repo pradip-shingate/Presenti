@@ -1,6 +1,6 @@
 package com.presenti.app.presenter
 
 interface NetworkResponseListener {
-    fun onNetworkSuccess()
-    fun onNetworkFailure()
+    fun onNetworkSuccess(o:Object?)
+    fun onNetworkFailure(o: Object?)
 }

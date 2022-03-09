@@ -17,99 +17,156 @@ import javax.net.ssl.X509TrustManager
 class NetworkHelper {
     private val JSON: MediaType = MediaType.parse("application/json; charset=utf-8")
 
-    fun getRequest(url: String, networkResponseListener: NetworkResponseListener) {
-        val okHttpClient: OkHttpClient? = getOkHttpClient()
-        val request = Request.Builder()
-            .url(url)
-            .build()
+    fun validateUser(url: String, networkResponseListener: NetworkResponseListener) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
 
-        okHttpClient?.newCall(request)?.enqueue(object : Callback {
-            override fun onFailure(request: Request?, e: IOException?) {
-                Log.d("Failed", "Success but failed.${e?.message}")
-                networkResponseListener.onNetworkFailure()
-            }
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
 
-            override fun onResponse(response: Response?) {
+                override fun onResponse(response: Response?) {
 
-                if (response?.isSuccessful == true) {
-                    val type: Type = object : TypeToken<UserDetails?>() {}.type
-                    val user: UserDetails? = Gson().fromJson(response?.body()!!.string(), type)
-                    if (user?.isError == false) {
-                        networkResponseListener.onNetworkSuccess()
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<UserDetails?>() {}.type
+                        val user: UserDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
                     }
                 }
-            }
-        })
+            })
+        } catch (e: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
     }
+
+    fun getUserDetails(url: String, networkResponseListener: NetworkResponseListener) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
+
+                override fun onResponse(response: Response?) {
+
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<EmployeeDetails?>() {}.type
+                        val user: EmployeeDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
+                    }
+                }
+            })
+        } catch (e: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
+    }
+
+    fun getUserPresentiDetails(url: String, networkResponseListener: NetworkResponseListener) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
+
+                override fun onResponse(response: Response?) {
+
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<UserPresentiDetail?>() {}.type
+                        val user: UserPresentiDetail? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
+                    }
+                }
+            })
+        } catch (e: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
+    }
+
 
     fun postRequest(url: String, json: String, networkResponseListener: NetworkResponseListener) {
-        val okHttpClient: OkHttpClient? = getOkHttpClient()
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
 
-        var body: RequestBody? = RequestBody.create(JSON, json)
+            var body: RequestBody? = RequestBody.create(JSON, json)
 
-        val request = Request.Builder()
-            .url(url)
-            .post(body)
-            .build()
+            val request = Request.Builder()
+                .url(url)
+                .post(body)
+                .build()
 
 
-        okHttpClient?.newCall(request)?.enqueue(object : Callback {
-            override fun onFailure(request: Request?, e: IOException?) {
-                Log.d("Failed", "Success but failed.${e?.message}")
-                networkResponseListener.onNetworkFailure()
-            }
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
 
-            override fun onResponse(response: Response?) {
+                override fun onResponse(response: Response?) {
 
-                if (response?.isSuccessful == true) {
-                    val type: Type = object : TypeToken<UserDetails?>() {}.type
-                    val user: UserDetails? = Gson().fromJson(response?.body()!!.string(), type)
-                    if (user?.isError == false) {
-                        networkResponseListener.onNetworkSuccess()
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<UserDetails?>() {}.type
+                        val user: UserDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
                     }
                 }
-            }
-        })
+            })
+        } catch (E: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
     }
 
+    @Throws(Exception::class)
     private fun getOkHttpClient(): OkHttpClient? {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            val trustAllCerts = arrayOf<TrustManager>(
-                object : X509TrustManager {
-                    @Throws(CertificateException::class)
-                    override fun checkClientTrusted(
-                        chain: Array<X509Certificate>,
-                        authType: String
-                    ) {
-                    }
-
-                    @Throws(CertificateException::class)
-                    override fun checkServerTrusted(
-                        chain: Array<X509Certificate>,
-                        authType: String
-                    ) {
-                    }
-
-                    override fun getAcceptedIssuers(): Array<X509Certificate> {
-                        return arrayOf()
-                    }
+        // Create a trust manager that does not validate certificate chains
+        val trustAllCerts = arrayOf<TrustManager>(
+            object : X509TrustManager {
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(
+                    chain: Array<X509Certificate>,
+                    authType: String
+                ) {
                 }
-            )
 
-            // Install the all-trusting trust manager
-            val sslContext: SSLContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, SecureRandom())
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(
+                    chain: Array<X509Certificate>,
+                    authType: String
+                ) {
+                }
 
-            // Create an ssl socket factory with our all-trusting manager
-            val sslSocketFactory = sslContext.socketFactory
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
+                    return arrayOf()
+                }
+            }
+        )
 
-            val client = OkHttpClient()
-            client.sslSocketFactory = sslSocketFactory
-            client.setHostnameVerifier { hostname, session -> true }
-            return client
-        } catch (e: java.lang.Exception) {
-        }
+        // Install the all-trusting trust manager
+        val sslContext: SSLContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory = sslContext.socketFactory
+
+        val client = OkHttpClient()
+        client.sslSocketFactory = sslSocketFactory
+        client.setHostnameVerifier { hostname, session -> true }
+        return client
         return null
     }
 }
