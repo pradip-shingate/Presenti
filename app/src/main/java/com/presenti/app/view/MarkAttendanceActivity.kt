@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -58,14 +59,19 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
                 .put("InTime", currentTime)
                 .put("EmpLatitude", currentLatitude)
                 .put("EmpLongitude", currentLongitude)
-            NetworkHelper().insertInOutLogs(
-                "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiInLog",
-                json.toString(),
-                this
-            )
+
+            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+
+            Thread {
+                NetworkHelper().insertInOutLogs(
+                    "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiInLog",
+                    json.toString(),
+                    this
+                )
+            }.start()
         }
 
-        findViewById<Button>(R.id.logout).setOnClickListener{
+        findViewById<Button>(R.id.logout).setOnClickListener {
             currentTime = getFormattedDate() ?: ""
             val json: JSONObject = JSONObject()
             json.put("EmpAutoId", EmployeeRepository.employee.data?.empAutoId)
@@ -73,10 +79,16 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
                 .put("OutTime", currentTime)
                 .put("EmpLatitude", currentLatitude)
                 .put("EmpLongitude", currentLongitude)
-            NetworkHelper().insertInOutLogs(
-                "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiOutLog",
-                json.toString(),OutLog()
-            )
+
+            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+
+            Thread {
+                NetworkHelper().insertInOutLogs(
+                    "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiOutLog",
+                    json.toString(), OutLog()
+                )
+            }.start()
+
         }
 
         try {
@@ -86,10 +98,16 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 getLastKnownLocation()
-                NetworkHelper().getUserPresentiDetails(
-                    "http://api.presenti.lo-yo.in/api/PresentiLog/GetPresentiLogByEmpAutoId?empAutoId=873&empBusinessId=1",
-                    this@MarkAttendanceActivity
-                )
+
+                findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+
+                Thread {
+                    NetworkHelper().getUserPresentiDetails(
+                        "http://api.presenti.lo-yo.in/api/PresentiLog/GetPresentiLogByEmpAutoId?empAutoId=${EmployeeRepository.employee.data.empAutoId}&empBusinessId=${EmployeeRepository.employee.data.businessId}",
+                        this@MarkAttendanceActivity
+                    )
+                }.start()
+
             } else {
                 ActivityCompat.requestPermissions(
                     this@MarkAttendanceActivity,
@@ -109,10 +127,14 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
     ) {
         if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             getLastKnownLocation()
-            NetworkHelper().getUserPresentiDetails(
-                "http://api.presenti.lo-yo.in/api/PresentiLog/GetPresentiLogByEmpAutoId?empAutoId=873&empBusinessId=1",
-                this@MarkAttendanceActivity
-            )
+            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+
+            Thread {
+                NetworkHelper().getUserPresentiDetails(
+                    "http://api.presenti.lo-yo.in/api/PresentiLog/GetPresentiLogByEmpAutoId?empAutoId=${EmployeeRepository.employee.data.empAutoId}&empBusinessId=${EmployeeRepository.employee.data.businessId}",
+                    this@MarkAttendanceActivity
+                )
+            }.start()
         } else if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             showAlertMessage(
                 "Presenti",
@@ -148,9 +170,16 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
                     "Last IN Time " + getFormattedDate(currentTime)
             }
         }
+
+        runOnUiThread {
+            findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+        }
     }
 
     override fun onNetworkFailure(o: Object?) {
+        runOnUiThread {
+            findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+        }
         showSnackBar("Unable to fetch user details.Please check your internet connection.")
     }
 
@@ -208,8 +237,7 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
         }
     }
 
-    inner class OutLog:NetworkResponseListener
-    {
+    inner class OutLog : NetworkResponseListener {
         override fun onNetworkSuccess(o: Object?) {
             if (o is UserDetails && !o.isError) {
                 runOnUiThread {
@@ -217,10 +245,14 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
                         "Last OUT Time " + getFormattedDate(currentTime)
                 }
             }
+
+            runOnUiThread {
+                findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+            }
         }
 
         override fun onNetworkFailure(o: Object?) {
-            onNetworkFailure(o)
+            this@MarkAttendanceActivity.onNetworkFailure(o)
         }
 
     }

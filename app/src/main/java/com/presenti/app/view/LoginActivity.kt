@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
@@ -38,10 +40,13 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
         loginButton = findViewById(R.id.button_continue)
         loginButton.setOnClickListener {
-            NetworkHelper().validateUser(
+            findViewById<Button>(R.id.button_continue).isEnabled = false
+            findViewById<ProgressBar>(R.id.progress).visibility=View.VISIBLE
+            Thread{ NetworkHelper().validateUser(
                 resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phoneNumber",
                 this
-            )
+            )}.start()
+
         }
     }
 
@@ -97,6 +102,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                     if (!it?.isError) {
                         EmployeeRepository.employee = it
                         EmployeePrefs.saveEmployeeDetails(this@LoginActivity, it)
+                        findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
                         startActivity(Intent(this, ScanQRActivity::class.java))
                         finish()
                     } else {
@@ -109,11 +115,15 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
     override fun onNetworkFailure(o: Object?) {
         runOnUiThread {
+            findViewById<Button>(R.id.button_continue).isEnabled = true
+            findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
             showSnackBar("Network error.Please check your internet connection and try again.")
         }
     }
 
     private fun showSnackBar(message: String) {
+        findViewById<Button>(R.id.button_continue).isEnabled = true
+        findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
         val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
         snackBar.show()
     }

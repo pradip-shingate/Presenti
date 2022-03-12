@@ -8,8 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
@@ -105,6 +107,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         str?.let {
             val id = Uri.parse(it).getQueryParameter("BusinessQRCodeId")
             if (!TextUtils.isEmpty(id) && TextUtils.isDigitsOnly(id) && Integer.parseInt(id) > 0) {
+                runOnUiThread{findViewById<ProgressBar>(R.id.progress).visibility= View.VISIBLE}
                 NetworkHelper().validateUser(
                     "http://api.presenti.lo-yo.in/api/Business/GetBusinessIdByQRCode?BusinessQRCodeId=$id",
                     this
@@ -133,9 +136,11 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                 showSnackBar("Invalid user.")
             }
         }
+        runOnUiThread{ findViewById<ProgressBar>(R.id.progress).visibility= View.GONE}
     }
 
     override fun onNetworkFailure(o: Object?) {
+        runOnUiThread{ findViewById<ProgressBar>(R.id.progress).visibility= View.GONE}
         showSnackBar("Network error.Please try again.")
     }
 

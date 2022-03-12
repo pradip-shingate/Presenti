@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.LoginActivity">
@@ -11,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-180dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bg" />
 
     <ImageView
@@ -29,13 +30,13 @@
         android:id="@+id/text_staff_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Staff Login"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:textColor="#2f2c73"
-        android:focusable="false"
-        android:cursorVisible="false"
         android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:text="Staff Login"
+        android:textColor="#2f2c73"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_bg" />
@@ -52,17 +53,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_staff_login" />
 
-    <Button
-        android:id="@+id/button_continue"
-        android:layout_width="200dp"
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:text="Continue"
-        android:textAllCaps="false"
-        style="@style/PresentiButton"
-        android:enabled="false"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone">
+
+        <Button
+            android:id="@+id/button_continue"
+            style="@style/PresentiButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#6db300"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPhone">
+
+        </ProgressBar>
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

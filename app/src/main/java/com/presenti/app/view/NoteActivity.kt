@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
@@ -30,6 +31,8 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
         language.layoutParams = logOut.layoutParams
         logOut.visibility = View.GONE
         findViewById<Button>(R.id.submit).setOnClickListener {
+            findViewById<Button>(R.id.submit).isEnabled=false
+            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
             val customerName = findViewById<EditText>(R.id.PersonName).text.toString()
             val customerPhone = findViewById<EditText>(R.id.Phone).text.toString()
             var customerNote = findViewById<EditText>(R.id.MultiLine).text.toString()
@@ -43,17 +46,24 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
                     .put("BusinessId", EmployeeRepository.employee.data?.businessId)
                     .put("EmpLatitude", currentLatitude)
                     .put("EmpLongitude", currentLongitude)
-                NetworkHelper().insertNote(
-                    "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiLogNote",
-                    json.toString(), this
-                )
+
+                Thread {
+                    NetworkHelper().insertNote(
+                        "http://api.presenti.lo-yo.in/api/PresentiLog/InsertPresentiLogNote",
+                        json.toString(), this
+                    )
+                }.start()
             }
         }
     }
 
     private fun showSnackBar(message: String) {
-        val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
-        snackBar.show()
+        runOnUiThread {
+            findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+            findViewById<Button>(R.id.submit).isEnabled=true
+            val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
+            snackBar.show()
+        }
     }
 
     private fun isPermissionGranted(): Boolean {
@@ -83,10 +93,10 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
     }
 
     override fun onNetworkSuccess(o: Object?) {
-        showSnackBar("Note updated")
+        showSnackBar("Note updated.")
     }
 
     override fun onNetworkFailure(o: Object?) {
-        showSnackBar("Unable to update note.")
+        showSnackBar("Unable to update note.Please check your internet connection.")
     }
 }
