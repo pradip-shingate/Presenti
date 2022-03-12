@@ -9,7 +9,7 @@ import javax.annotation.Generated
 class Data {
     @SerializedName("EmpAutoId")
     @Expose
-    var empAutoId: Int? = null
+    var empAutoId: Int = -1
 
     @SerializedName("BusinessId")
     @Expose
@@ -21,7 +21,7 @@ class Data {
 
     @SerializedName("EmpMobileNo")
     @Expose
-    var empMobileNo: String? = null
+    var empMobileNo: String = ""
 
     @SerializedName("EmailId")
     @Expose

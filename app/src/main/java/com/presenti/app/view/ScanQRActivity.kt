@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.presenti.app.R
+import com.presenti.app.model.EmployeePrefs
 import com.presenti.app.model.EmployeeRepository
 import com.presenti.app.model.NetworkHelper
 import com.presenti.app.model.UserDetails
@@ -59,9 +60,15 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
             }
         }
 
+        val buttonLogOut = findViewById<ImageView>(R.id.log_out)
+        buttonLogOut.setOnClickListener {
+            EmployeePrefs.deleteEmployeeDetails(this@ScanQRActivity)
+            finish()
+        }
+
         val buttonRemoteLogin = findViewById<Button>(R.id.remote)
         buttonRemoteLogin.setOnClickListener {
-
+            startActivity(Intent(this@ScanQRActivity, MarkAttendanceActivity::class.java))
         }
 
         findViewById<TextView>(R.id.user_name).text =
@@ -120,7 +127,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
 
     override fun onNetworkSuccess(o: Object?) {
         o?.let {
-            if (o is UserDetails && EmployeeRepository.employee.data?.businessId == o.data && EmployeeRepository.employee.data?.isActive == false) {
+            if (o is UserDetails && EmployeeRepository.employee.data?.businessId == o.data) {
                 startActivity(Intent(this@ScanQRActivity, MarkAttendanceActivity::class.java))
             } else {
                 showSnackBar("Invalid user.")

@@ -12,10 +12,7 @@ import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.material.snackbar.Snackbar
 import com.presenti.app.R
-import com.presenti.app.model.EmployeeDetails
-import com.presenti.app.model.EmployeeRepository
-import com.presenti.app.model.NetworkHelper
-import com.presenti.app.model.UserDetails
+import com.presenti.app.model.*
 import com.presenti.app.presenter.NetworkResponseListener
 
 
@@ -77,11 +74,18 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
     }
 
     override fun onNetworkSuccess(o: Object?) {
-        o?.let {
+        o?.let { it ->
             if (it is UserDetails) {
                 if (!it?.isError) {
+                    var phone = ""
+                    phoneNumber?.let { value ->
+                        if (value.startsWith("+91")) {
+                            phone = value.substring(3, value.length)
+                        }
+                    }
+
                     NetworkHelper().getUserDetails(
-                        "http://api.presenti.lo-yo.in/api/Employee/GetEmployeeDetailByMobNo?MobileNumber=9766934468&BusinessId=1",
+                        "http://api.presenti.lo-yo.in/api/Employee/GetEmployeeDetailByMobNo?MobileNumber=$phone&BusinessId=1",
                         this
                     )
                 } else {
@@ -92,6 +96,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                 runOnUiThread {
                     if (!it?.isError) {
                         EmployeeRepository.employee = it
+                        EmployeePrefs.saveEmployeeDetails(this@LoginActivity, it)
                         startActivity(Intent(this, ScanQRActivity::class.java))
                         finish()
                     } else {

@@ -99,7 +99,39 @@ class NetworkHelper {
     }
 
 
-    fun postRequest(url: String, json: String, networkResponseListener: NetworkResponseListener) {
+    fun insertInOutLogs(url: String, json: String, networkResponseListener: NetworkResponseListener) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+
+            var body: RequestBody? = RequestBody.create(JSON, json)
+
+            val request = Request.Builder()
+                .url(url)
+                .post(body)
+                .build()
+
+
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
+
+                override fun onResponse(response: Response?) {
+
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<UserDetails?>() {}.type
+                        val user: UserDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
+                    }
+                }
+            })
+        } catch (E: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
+    }
+
+    fun insertNote(url: String, json: String, networkResponseListener: NetworkResponseListener) {
         try {
             val okHttpClient: OkHttpClient? = getOkHttpClient()
 

@@ -16,5 +16,5 @@ class EmployeeDetails:Object() {
 
     @SerializedName("Data")
     @Expose
-    var data: Data? = null
+    var data: Data=Data()
 }
