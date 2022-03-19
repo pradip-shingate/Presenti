@@ -33,7 +33,7 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:text="Staff Login"
+        android:text="@string/staffLogintText"
         android:textColor="#2f2c73"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
         android:ems="10"
-        android:hint="Phone Number"
+        android:hint="@string/staffPhoneNumber"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:text="Continue"
+            android:text="@string/continueBtn"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 

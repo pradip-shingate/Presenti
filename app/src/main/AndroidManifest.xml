@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.presenti.app">
+    package="com.mylozo.presenti.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,38 +20,49 @@
         android:theme="@style/Theme.Presenti"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".view.NoteActivity"
+            android:name="com.mylozo.presenti.app.view.LanguageSelectorActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Presenti.NoActionBar" />
+        <activity
+            android:name="com.mylozo.presenti.app.view.NoteActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Presenti.NoActionBar"/>
+            android:theme="@style/Theme.Presenti.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".view.MarkAttendanceActivity"
+            android:name="com.mylozo.presenti.app.view.MarkAttendanceActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:label="@string/title_activity_mark_attendance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".view.ScanQRActivity"
+            android:name="com.mylozo.presenti.app.view.ScanQRActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".view.MerchantScannerActivity"
+            android:name="com.mylozo.presenti.app.view.MerchantScannerActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name="com.mylozo.presenti.app.view.LoginActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".view.IntroActivity"
+            android:name="com.mylozo.presenti.app.view.IntroActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Presenti.NoActionBar" />
         <activity
-            android:name=".view.SplashScreenActivity"
+            android:name="com.mylozo.presenti.app.view.SplashScreenActivity"
+            android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">

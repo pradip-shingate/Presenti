@@ -1,4 +1,4 @@
-package com.presenti.app.model
+package com.mylozo.presenti.app.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -6,7 +6,7 @@ import java.util.*
 import javax.annotation.Generated
 
 @Generated("jsonschema2pojo")
-class UserPresentiDetail :Object(){
+class BusinessDetails:Object() {
     @SerializedName("IsError")
     @Expose
     var isError: Boolean = true
@@ -17,5 +17,5 @@ class UserPresentiDetail :Object(){
 
     @SerializedName("Data")
     @Expose
-    var data: PresentiData? = null
+    var data: BusinessData? = null
 }

@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Log Attendance"
+        android:text="@string/logAttendance"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:visibility="visible"
@@ -61,7 +61,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="LogIn"
+        android:text="@string/logIn"
         android:textAllCaps="false"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Last IN Time"
+        android:text="@string/lastInTime"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:visibility="visible"
@@ -87,7 +87,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="LogOut"
+        android:text="@string/logOut"
         android:textAllCaps="false"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Last OUT Time"
+        android:text="@string/lastOutTime"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:visibility="visible"
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginRight="25dp"
-            android:text="Note"
+            android:text="@string/note"
             android:textAllCaps="false" />
 
         <Button
@@ -135,7 +135,7 @@
             android:layout_marginLeft="25dp"
             android:background="@drawable/button_style"
             android:enabled="false"
-            android:text="Photo"
+            android:text="@string/photo"
             android:textAllCaps="false" />
 
     </LinearLayout>

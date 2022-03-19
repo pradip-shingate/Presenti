@@ -1,7 +1,8 @@
-package com.presenti.app.view
+package com.mylozo.presenti.app.view
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -13,9 +14,9 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.material.snackbar.Snackbar
-import com.presenti.app.R
-import com.presenti.app.model.*
-import com.presenti.app.presenter.NetworkResponseListener
+import com.mylozo.presenti.app.R
+import com.mylozo.presenti.app.model.*
+import com.mylozo.presenti.app.presenter.NetworkResponseListener
 
 
 class LoginActivity : AppCompatActivity(), NetworkResponseListener {
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Utility.loadLocale(this)
         setContentView(R.layout.activity_login)
 
         editText = findViewById(R.id.editTextPhone)
@@ -41,11 +43,20 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
         loginButton = findViewById(R.id.button_continue)
         loginButton.setOnClickListener {
             findViewById<Button>(R.id.button_continue).isEnabled = false
-            findViewById<ProgressBar>(R.id.progress).visibility=View.VISIBLE
-            Thread{ NetworkHelper().validateUser(
-                resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phoneNumber",
-                this
-            )}.start()
+            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+            var phone = ""
+            phoneNumber?.let { value ->
+                if (value.startsWith("+91")) {
+                    phone = value.substring(3, value.length)
+                }
+            }
+
+            Thread {
+                NetworkHelper().validateUser(
+                    resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phone",
+                    this
+                )
+            }.start()
 
         }
     }
@@ -81,7 +92,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
     override fun onNetworkSuccess(o: Object?) {
         o?.let { it ->
             if (it is UserDetails) {
-                if (!it?.isError) {
+                if (!it?.isError && it?.data > 0) {
                     var phone = ""
                     phoneNumber?.let { value ->
                         if (value.startsWith("+91")) {
@@ -90,25 +101,40 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                     }
 
                     NetworkHelper().getUserDetails(
-                        "http://api.presenti.lo-yo.in/api/Employee/GetEmployeeDetailByMobNo?MobileNumber=$phone&BusinessId=1",
+                        "http://api.presenti.lo-yo.in/api/Employee/GetEmployeeDetailByMobNo?MobileNumber=$phone&BusinessId=${it?.data}",
                         this
                     )
                 } else {
-                    showSnackBar("Mobile number may not be registered with us. Please contact admin.")
+                    showSnackBar(resources.getString(R.string.snackMobileError))
                 }
 
             } else if (it is EmployeeDetails) {
-                runOnUiThread {
-                    if (!it?.isError) {
-                        EmployeeRepository.employee = it
-                        EmployeePrefs.saveEmployeeDetails(this@LoginActivity, it)
-                        findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
+
+                if (!it?.isError) {
+                    EmployeeRepository.employee = it
+                    EmployeePrefs.saveEmployeeDetails(this@LoginActivity, it)
+                    NetworkHelper().getBusinessDetails(
+                        "http://api.presenti.lo-yo.in/api/Business/GetBusinessData?BusinessId=${it.data.businessId}",
+                        this@LoginActivity
+                    )
+                } else {
+                    showSnackBar(resources.getString(R.string.snackInvalidEmployee))
+                }
+
+            } else if (it is BusinessDetails) {
+
+                if (!it?.isError) {
+                    EmployeeRepository.business = it
+                    EmployeePrefs.saveBusinessDetails(this@LoginActivity, it)
+                    runOnUiThread {
+                        findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
                         startActivity(Intent(this, ScanQRActivity::class.java))
                         finish()
-                    } else {
-                        showSnackBar("Invalid employee. Please contact admin.")
                     }
+                } else {
+                    showSnackBar(resources.getString(R.string.snackInvalidBusiness))
                 }
+
             }
         }
     }
@@ -116,16 +142,24 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
     override fun onNetworkFailure(o: Object?) {
         runOnUiThread {
             findViewById<Button>(R.id.button_continue).isEnabled = true
-            findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
-            showSnackBar("Network error.Please check your internet connection and try again.")
+            findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+            showSnackBar(resources.getString(R.string.snackNetworkError))
         }
     }
 
     private fun showSnackBar(message: String) {
-        findViewById<Button>(R.id.button_continue).isEnabled = true
-        findViewById<ProgressBar>(R.id.progress).visibility=View.GONE
-        val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
-        snackBar.show()
+        runOnUiThread {
+            findViewById<Button>(R.id.button_continue).isEnabled = true
+            findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
+            val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
+            snackBar.show()
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Utility.loadLocale(this)
+        setContentView(R.layout.activity_intro)
     }
 
 }

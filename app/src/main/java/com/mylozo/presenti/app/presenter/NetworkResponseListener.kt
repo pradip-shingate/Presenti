@@ -1,4 +1,4 @@
-package com.presenti.app.presenter
+package com.mylozo.presenti.app.presenter
 
 interface NetworkResponseListener {
     fun onNetworkSuccess(o:Object?)

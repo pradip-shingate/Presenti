@@ -1,11 +1,11 @@
-package com.presenti.app.view
+package com.mylozo.presenti.app.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.presenti.app.R
+import com.mylozo.presenti.app.R
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

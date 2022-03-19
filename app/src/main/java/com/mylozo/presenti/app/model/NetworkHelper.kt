@@ -1,9 +1,9 @@
-package com.presenti.app.model
+package com.mylozo.presenti.app.model
 
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.presenti.app.presenter.NetworkResponseListener
+import com.mylozo.presenti.app.presenter.NetworkResponseListener
 import com.squareup.okhttp.*
 import java.io.IOException
 import java.lang.reflect.Type
@@ -98,6 +98,32 @@ class NetworkHelper {
         }
     }
 
+    fun getBusinessDetails(url: String, networkResponseListener: NetworkResponseListener) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
+
+                override fun onResponse(response: Response?) {
+
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<BusinessDetails?>() {}.type
+                        val user: BusinessDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
+                    }
+                }
+            })
+        } catch (e: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
+    }
 
     fun insertInOutLogs(url: String, json: String, networkResponseListener: NetworkResponseListener) {
         try {

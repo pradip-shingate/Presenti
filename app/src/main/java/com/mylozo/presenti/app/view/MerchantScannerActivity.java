@@ -1,4 +1,4 @@
-package com.presenti.app.view;
+package com.mylozo.presenti.app.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.Result;
-import com.presenti.app.R;
+import com.mylozo.presenti.app.R;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 

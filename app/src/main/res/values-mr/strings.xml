@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nextText">पुढे</string>
+    <string name="staffLogintText">कर्मचारी लॉगिन</string>
+    <string name="staffPhoneNumber">फोन नंबर</string>
+    <string name="continueBtn">सुरू ठेवा</string>
+    <string name="logAttendance">लॉग उपस्थिती</string>
+    <string name="logIn">लॉगिन करा</string>
+    <string name="lastInTime">शेवटची वेळ</string>
+    <string name="lastOutTime">शेवटची वेळ</string>
+    <string name="logOut">लॉग आऊट करा</string>
+    <string name="clickHere">QR स्कॅन करण्यासाठी येथे क्लिक करा</string>
+    <string name="remoteLogin">दूरस्थपणे लॉग इन करा</string>
+    <string name="customerName">ग्राहकाचे नाव</string>
+    <string name="mobileNumber">मोबाईल नंबर</string>
+    <string name="addNote">नोंदी जोडा</string>
+    <string name="submit">सबमिट करा</string>
+    <string name="note">नोंद</string>
+    <string name="photo">छायाचित्र</string>
+    <string name="snackNoteUpdate">नोंद अद्यतनित</string>
+    <string name="snackNetworkError">नेटवर्क त्रुटी. कृपया तुमचे इंटरनेट कनेक्शन तपासा.</string>
+    <string name="snackCustomerName">कृपया ग्राहकाचे नाव आणि फोन नंबर टाका.</string>
+    <string name="snackMobileError">मोबाईल नंबर आमच्याकडे नोंदणीकृत नसावा. कृपया प्रशासकाशी संपर्क साधा.</string>
+    <string name="snackInvalidEmployee">अवैध कर्मचारी. कृपया प्रशासकाशी संपर्क साधा.</string>
+    <string name="snackInvalidBusiness">अवैध व्यवसाय. कृपया प्रशासकाशी संपर्क साधा.</string>
+    <string name="snackOutOFBusiness">तुम्ही व्यवसाय स्थान मर्यादेच्या बाहेर आहात.</string>
+    <string name="snackLocationError">स्थान शोधू शकत नाही. कृपया सेटिंग्जमधून तुमचे स्थान चालू करा.</string>
+    <string name="snackdistanceError">व्यवसायापासून दूर जाताना त्रुटी.</string>
+    <string name="snackInvalidUser">अवैध वापरकर्ता.</string>
+    <string name="snackSuccessful">यशस्वी आहे</string>
+    <string name="alertCamera">पुढे जाण्यासाठी कॅमेरा परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
+    <string name="alertLocation">पुढे जाण्यासाठी स्थान परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
+</resources>
