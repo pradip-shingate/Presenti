@@ -71,6 +71,9 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                     phoneNumber = credential?.id
                     editText.setText(phoneNumber)
                     findViewById<Button>(R.id.button_continue).isEnabled = true
+                } else {
+                    showSnackBar(resources.getString(R.string.snackSimError))
+                    findViewById<Button>(R.id.button_continue).isEnabled = false
                 }
         }
     }

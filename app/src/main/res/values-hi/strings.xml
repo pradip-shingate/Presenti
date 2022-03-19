@@ -27,7 +27,13 @@
     <string name="snackLocationError">स्थान का पता नहीं लगा सकता। कृपया सेटिंग से अपना स्थान चालू करें।</string>
     <string name="snackdistanceError">व्यवसाय से दूरी प्राप्त करने में त्रुटि।</string>
     <string name="snackInvalidUser">अमान्य उपयोगकर्ता</string>
-    <string name="snackSuccessful">सफल है</string>
+    <string name="snackSuccessful">सफल हुआ है</string>
     <string name="alertCamera">आगे बढ़ने के लिए कैमरा अनुमति की आवश्यकता है। आप इसे Presenti ऐप के लिए सिस्टम सेटिंग्स में कर सकते हैं।</string>
     <string name="alertLocation">आगे बढ़ने के लिए स्थान अनुमति की आवश्यकता है। आप इसे Presenti ऐप के लिए सिस्टम सेटिंग्स में कर सकते हैं।</string>
+    <string name="snackSimError">फ़ोन नंबर का पता लगाने में असमर्थ. कृपया सुनिश्चित करें कि सिम ठीक से डाला गया है।</string>
+    <string name="languageSelect">भाषा चुने</string>
+    <string name="languageHindi">हिन्दी</string>
+    <string name="languageMarathi">मराठी</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="login">लॉग इन</string>
 </resources>

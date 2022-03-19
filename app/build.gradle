@@ -4,6 +4,16 @@ plugins {
 }
 
 android {
+
+    signingConfigs {
+        release {
+            storeFile file('presenti.jks')
+            storePassword 'mylozo@2022!@#'
+            keyAlias 'presenti'
+            keyPassword 'mylozo@2022!@#'
+        }
+    }
+
     compileSdk 31
 
     defaultConfig {
@@ -13,13 +23,18 @@ android {
         versionCode 1803202218
         versionName "1.0.8"
 
+        archivesBaseName = "Presenti_v${versionName}_(${versionCode})"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            resValue "string", "appVersionString", "$defaultConfig.versionName"
+
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
     compileOptions {
@@ -31,6 +46,10 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+
+    afterEvaluate {
+        bundleRelease
     }
 }
 

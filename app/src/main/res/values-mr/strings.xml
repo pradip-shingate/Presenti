@@ -9,7 +9,7 @@
     <string name="lastInTime">शेवटची वेळ</string>
     <string name="lastOutTime">शेवटची वेळ</string>
     <string name="logOut">लॉग आऊट करा</string>
-    <string name="clickHere">QR स्कॅन करण्यासाठी येथे क्लिक करा</string>
+    <string name="clickHere">क्यूआर स्कॅन करण्यासाठी येथे क्लिक करा</string>
     <string name="remoteLogin">दूरस्थपणे लॉग इन करा</string>
     <string name="customerName">ग्राहकाचे नाव</string>
     <string name="mobileNumber">मोबाईल नंबर</string>
@@ -27,7 +27,13 @@
     <string name="snackLocationError">स्थान शोधू शकत नाही. कृपया सेटिंग्जमधून तुमचे स्थान चालू करा.</string>
     <string name="snackdistanceError">व्यवसायापासून दूर जाताना त्रुटी.</string>
     <string name="snackInvalidUser">अवैध वापरकर्ता.</string>
-    <string name="snackSuccessful">यशस्वी आहे</string>
+    <string name="snackSuccessful">यशस्वी झाले आहे</string>
     <string name="alertCamera">पुढे जाण्यासाठी कॅमेरा परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
     <string name="alertLocation">पुढे जाण्यासाठी स्थान परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
+    <string name="snackSimError">फोन नंबर शोधण्यात अक्षम. कृपया सिम योग्यरित्या घातल्याचे सुनिश्चित करा.</string>
+    <string name="languageSelect">भाषा निवडा</string>
+    <string name="languageHindi">हिंदी</string>
+    <string name="languageMarathi">मराठी</string>
+    <string name="logout">लॉग आऊट</string>
+    <string name="login">लॉगिन</string>
 </resources>

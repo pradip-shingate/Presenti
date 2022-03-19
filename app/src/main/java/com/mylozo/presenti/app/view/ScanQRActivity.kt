@@ -6,11 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -92,9 +90,10 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         val str = result.data?.getBooleanExtra("isSuccess", false)
         val type = result.data?.getStringExtra("type")
 
-        if (str == true) {
-            showSnackBar("$type "+resources.getString(R.string.snackSuccessful))
-        }
+        if (str == true && type.equals("Log In"))
+            showSnackBar(resources.getString(R.string.login) + " " + resources.getString(R.string.snackSuccessful))
+        else if (str == true && type.equals("Log Out"))
+            showSnackBar(resources.getString(R.string.logout) + " " + resources.getString(R.string.snackSuccessful))
     }
 
     private var localeActivityResultLauncher = registerForActivityResult(
@@ -186,8 +185,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         initUI()
     }
 
-    private fun initUI()
-    {
+    private fun initUI() {
         findViewById<TextView>(R.id.company_name).text =
             EmployeeRepository.business.data?.businessName
 
@@ -234,8 +232,8 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         findViewById<TextView>(R.id.user_name).text =
             "Hi, " + EmployeeRepository.employee.data?.empName
 
-        findViewById<ImageView>(R.id.language).setOnClickListener{
-            localeActivityResultLauncher.launch(Intent(this,LanguageSelectorActivity::class.java))
+        findViewById<ImageView>(R.id.language).setOnClickListener {
+            localeActivityResultLauncher.launch(Intent(this, LanguageSelectorActivity::class.java))
         }
     }
 }

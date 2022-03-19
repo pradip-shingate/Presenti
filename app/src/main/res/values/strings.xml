@@ -34,6 +34,12 @@
     <string name="snackdistanceError">Error while getting distance from business.</string>
     <string name="snackInvalidUser">Invalid user.</string>
     <string name="snackSuccessful">is Successful</string>
+    <string name="snackSimError">Unable to detect phone number. Please make sure SIM is inserted properly.</string>
     <string name="alertCamera">Camera permission needed in order to proceed.You can do it in system settings for Presenti app.</string>
     <string name="alertLocation">Location permission needed in order to proceed.You can do it in system settings for Presenti app.</string>
+    <string name="languageSelect">Select Language</string>
+    <string name="languageHindi">Hindi</string>
+    <string name="languageMarathi">Marathi</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log Out</string>
 </resources>
