@@ -2,6 +2,7 @@ package com.mylozo.presenti.app.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -56,19 +57,19 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
         if (o is UserPresentiDetail && !o.isError) {
             runOnUiThread {
                 findViewById<TextView>(R.id.last_in_time).text =
-                    resources.getString(R.string.lastInTime)+" " + getFormattedDate(o.data?.inTime)
+                    resources.getString(R.string.lastInTime) + " " + getFormattedDate(o.data?.inTime)
                 findViewById<TextView>(R.id.last_out_time).text =
-                    resources.getString(R.string.lastOutTime)+" " + getFormattedDate(o.data?.outTime)
+                    resources.getString(R.string.lastOutTime) + " " + getFormattedDate(o.data?.outTime)
             }
         } else if (o is UserDetails && !o.isError) {
             runOnUiThread {
                 findViewById<TextView>(R.id.last_in_time).text =
-                    resources.getString(R.string.lastInTime)+" " + getFormattedDate(currentTime)
+                    resources.getString(R.string.lastInTime) + " " + getFormattedDate(currentTime)
 
-                val intent=Intent()
-                intent.putExtra("isSuccess",true)
-                intent.putExtra("type","Log In")
-                setResult(7,intent)
+                val intent = Intent()
+                intent.putExtra("isSuccess", true)
+                intent.putExtra("type", "Log In")
+                setResult(7, intent)
                 onBackPressed()
             }
         }
@@ -144,16 +145,18 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
             if (o is UserDetails && !o.isError) {
                 runOnUiThread {
                     findViewById<TextView>(R.id.last_out_time).text =
-                        resources.getString(R.string.lastOutTime)+" " + getFormattedDate(currentTime)
+                        resources.getString(R.string.lastOutTime) + " " + getFormattedDate(
+                            currentTime
+                        )
                 }
             }
 
             runOnUiThread {
                 findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
-                val intent=Intent()
-                intent.putExtra("isSuccess",true)
-                intent.putExtra("type","Log Out")
-                setResult(7,intent)
+                val intent = Intent()
+                intent.putExtra("isSuccess", true)
+                intent.putExtra("type", "Log Out")
+                setResult(7, intent)
                 onBackPressed()
             }
         }
@@ -270,14 +273,18 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
         }.start()
     }
 
-    private fun initUI()
-    {
+    private fun initUI() {
         findViewById<TextView>(R.id.company_name).text =
             EmployeeRepository.business.data?.businessName
 
         val note = findViewById<Button>(R.id.note)
         note.setOnClickListener {
-            startActivity(Intent(this@MarkAttendanceActivity, NoteActivity::class.java))
+            noteActivityResultLauncher.launch(
+                Intent(
+                    this@MarkAttendanceActivity,
+                    NoteActivity::class.java
+                )
+            )
         }
 
         val logOut = findViewById<ImageView>(R.id.log_out)
@@ -289,17 +296,31 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
             "Hi, " + EmployeeRepository.employee.data?.empName
 
         findViewById<Button>(R.id.login).setOnClickListener {
-            if (EmployeeRepository.business.data?.isBusinessLocationDetect == 1)
-                doGeofence(true)
-            else
-                doLogin()
+            if (isGPSActive()) {
+                if (EmployeeRepository.business.data?.isBusinessLocationDetect == 1)
+                    doGeofence(true)
+                else
+                    doLogin()
+            } else {
+                showAlertMessage(
+                    resources.getString(R.string.alert),
+                    resources.getString(R.string.gpsError)
+                )
+            }
         }
 
         findViewById<Button>(R.id.logout).setOnClickListener {
-            if (EmployeeRepository.business.data?.isBusinessLocationDetect == 1)
-                doGeofence(false)
-            else
-                doLogOut()
+            if (isGPSActive()) {
+                if (EmployeeRepository.business.data?.isBusinessLocationDetect == 1)
+                    doGeofence(false)
+                else
+                    doLogOut()
+            } else {
+                showAlertMessage(
+                    resources.getString(R.string.alert),
+                    resources.getString(R.string.gpsError)
+                )
+            }
         }
         getLastKnownLocation()
         findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
@@ -310,8 +331,32 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
             )
         }.start()
 
-        findViewById<ImageView>(R.id.language).setOnClickListener{
-            localeActivityResultLauncher.launch(Intent(this,LanguageSelectorActivity::class.java))
+        findViewById<ImageView>(R.id.language).setOnClickListener {
+            localeActivityResultLauncher.launch(Intent(this, LanguageSelectorActivity::class.java))
+        }
+    }
+
+    private var noteActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val code = result.resultCode
+        var noteUpdated = false
+        noteUpdated = result.data?.getBooleanExtra("noteUpdated", false) == true
+        if (code == 480 && noteUpdated) {
+            showSnackBar(resources.getString(R.string.snackNoteUpdate))
+        }
+    }
+
+    private fun isGPSActive(): Boolean {
+        return if (EmployeeRepository.business.data?.attendanceLogTypeId == 2) {
+            try {
+                val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            } catch (e: Exception) {
+                false
+            }
+        } else {
+            true
         }
     }
 }

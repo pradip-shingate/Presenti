@@ -17,7 +17,7 @@
     <string name="submit">प्रस्तुत करना</string>
     <string name="note">प्रस्तुत</string>
     <string name="photo">तस्वीर</string>
-    <string name="snackNoteUpdate">नोट अपडेट किया गया।</string>
+    <string name="snackNoteUpdate">नोट सफलतापूर्वक सहेजा गया</string>
     <string name="snackNetworkError">नेटवर्क त्रुटि। कृपया अपने इंटरनेट कनेक्शन की जाँच करें।</string>
     <string name="snackCustomerName">कृपया ग्राहक का नाम और फोन नंबर दर्ज करें।</string>
     <string name="snackMobileError">मोबाइल नंबर हमारे पास पंजीकृत नहीं हो सकता है। कृपया व्यवस्थापक से संपर्क करें।</string>
@@ -36,4 +36,7 @@
     <string name="languageMarathi">मराठी</string>
     <string name="logout">लॉग आउट</string>
     <string name="login">लॉग इन</string>
+    <string name="snackCustomerphone">कृपया दस अंकों का फ़ोन नंबर दर्ज करें।</string>
+    <string name="alert">चेतावनी</string>
+    <string name="gpsError">लॉगिन जारी रखने के लिए कृपया स्थान सेवाओं को चालू करें।</string>
 </resources>

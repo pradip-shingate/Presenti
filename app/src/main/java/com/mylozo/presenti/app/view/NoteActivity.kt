@@ -23,6 +23,8 @@ import com.mylozo.presenti.app.model.NetworkHelper
 import com.mylozo.presenti.app.model.Utility
 import com.mylozo.presenti.app.presenter.NetworkResponseListener
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NoteActivity : AppCompatActivity(), NetworkResponseListener {
     var currentLatitude = 0.0
@@ -31,15 +33,15 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
         super.onCreate(savedInstanceState)
         Utility.loadLocale(this)
         setContentView(R.layout.activity_note)
-      initUI()
+        initUI()
     }
 
     private fun showSnackBar(message: String) {
         runOnUiThread {
             findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
-            findViewById<Button>(R.id.submit).isEnabled=true
+            findViewById<Button>(R.id.submit).isEnabled = true
             val snackBar = Snackbar.make(findViewById(R.id.rootView), message, Snackbar.LENGTH_LONG)
-            snackBar.anchorView=findViewById(R.id.phone)
+            snackBar.anchorView = findViewById(R.id.phone)
             snackBar.show()
         }
     }
@@ -71,7 +73,14 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
     }
 
     override fun onNetworkSuccess(o: Object?) {
-        showSnackBar(resources.getString(R.string.snackNoteUpdate))
+//        showSnackBar(resources.getString(R.string.snackNoteUpdate))
+
+        runOnUiThread {
+            val intent = Intent()
+            intent.putExtra("noteUpdated", true)
+            setResult(480, intent)
+            finish()
+        }
     }
 
     override fun onNetworkFailure(o: Object?) {
@@ -91,26 +100,30 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
         onConfigurationChanged(resources.configuration)
     }
 
-    private fun initUI()
-    {
+    private fun initUI() {
         val logOut = findViewById<ImageView>(R.id.log_out)
         val language = findViewById<ImageView>(R.id.language)
         language.layoutParams = logOut.layoutParams
         logOut.visibility = View.GONE
         findViewById<Button>(R.id.submit).setOnClickListener {
-            findViewById<Button>(R.id.submit).isEnabled=false
+            findViewById<Button>(R.id.submit).isEnabled = false
             findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
             val customerName = findViewById<EditText>(R.id.PersonName).text.toString()
             val customerPhone = findViewById<EditText>(R.id.phone).text.toString()
             var customerNote = findViewById<EditText>(R.id.MultiLine).text.toString()
             if (customerName.isEmpty() || customerPhone.isEmpty()) {
                 showSnackBar(resources.getString(R.string.snackCustomerName))
+            } else if (customerPhone.length < 10) {
+                showSnackBar(resources.getString(R.string.snackCustomerphone))
             } else {
                 val json: JSONObject = JSONObject()
-                json.put("CustomerName", customerName)
+                json.put("NoteID","25")
+                    .put("CustomerName", customerName)
                     .put("CustomerMobileNumber", customerPhone)
                     .put("Notes", customerNote)
                     .put("BusinessId", EmployeeRepository.employee.data?.businessId)
+                    .put("CreatedBy", EmployeeRepository.employee.data?.empName)
+                    .put("CreatedOnStr",getFormattedDate() )
                     .put("EmpLatitude", currentLatitude)
                     .put("EmpLongitude", currentLongitude)
 
@@ -123,8 +136,17 @@ class NoteActivity : AppCompatActivity(), NetworkResponseListener {
             }
         }
 
-        findViewById<ImageView>(R.id.language).setOnClickListener{
-            localeActivityResultLauncher.launch(Intent(this,LanguageSelectorActivity::class.java))
+        findViewById<ImageView>(R.id.language).setOnClickListener {
+            localeActivityResultLauncher.launch(Intent(this, LanguageSelectorActivity::class.java))
         }
+    }
+
+    private fun getFormattedDate(): String? {
+        try {
+            val fmtOut = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH)
+            return fmtOut.format(Date(System.currentTimeMillis()))
+        } catch (e: Exception) {
+        }
+        return ""
     }
 }

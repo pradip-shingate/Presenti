@@ -17,7 +17,7 @@
     <string name="submit">सबमिट करा</string>
     <string name="note">नोंद</string>
     <string name="photo">छायाचित्र</string>
-    <string name="snackNoteUpdate">नोंद अद्यतनित</string>
+    <string name="snackNoteUpdate">नोंद यशस्वीरित्या जतन केली</string>
     <string name="snackNetworkError">नेटवर्क त्रुटी. कृपया तुमचे इंटरनेट कनेक्शन तपासा.</string>
     <string name="snackCustomerName">कृपया ग्राहकाचे नाव आणि फोन नंबर टाका.</string>
     <string name="snackMobileError">मोबाईल नंबर आमच्याकडे नोंदणीकृत नसावा. कृपया प्रशासकाशी संपर्क साधा.</string>
@@ -36,4 +36,7 @@
     <string name="languageMarathi">मराठी</string>
     <string name="logout">लॉग आऊट</string>
     <string name="login">लॉगिन</string>
+    <string name="snackCustomerphone">कृपया दहा अंकी फोन नंबर टाका.</string>
+    <string name="alert">अलर्ट</string>
+    <string name="gpsError">लॉगिन सुरू ठेवण्यासाठी कृपया स्थान सेवा चालू करा.</string>
 </resources>
