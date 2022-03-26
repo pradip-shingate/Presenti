@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ScanQRActivity">
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:textColor="@color/blue"
         android:text="MYLOZO TECH PVT LTD"
+        android:textColor="@color/blue"
         android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="visible"
@@ -37,7 +37,7 @@
         android:text="@string/logAttendance"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/company_name" />
@@ -60,6 +60,9 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:background="@drawable/qr_border"
+        android:cropToPadding="true"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -71,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clickHere"
-        android:textSize="15sp"
         android:textColor="@color/black"
+        android:textSize="15sp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -80,10 +83,10 @@
 
     <Button
         android:id="@+id/remote"
+        style="@style/PresentiButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        style="@style/PresentiButton"
         android:text="@string/remoteLogin"
         android:textAllCaps="false"
         android:visibility="visible"
@@ -95,13 +98,13 @@
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:indeterminateTint="#6db300"
         android:visibility="gone"
-        android:layout_gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remote" >
+        app:layout_constraintTop_toBottomOf="@+id/remote">
 
     </ProgressBar>
 

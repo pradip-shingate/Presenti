@@ -28,8 +28,7 @@
             android:configChanges="locale"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Presenti.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/Theme.Presenti.NoActionBar"/>
         <activity
             android:name="com.mylozo.presenti.app.view.MarkAttendanceActivity"
             android:configChanges="locale"

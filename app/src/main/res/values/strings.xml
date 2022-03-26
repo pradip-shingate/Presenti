@@ -10,10 +10,10 @@
     <string name="staffPhoneNumber">Phone Number</string>
     <string name="continueBtn">Continue</string>
     <string name="logAttendance">Log Attendance</string>LogIn
-    <string name="logIn">LogIn</string>
+    <string name="logIn">Log In</string>
     <string name="lastInTime">Last IN Time</string>
     <string name="lastOutTime">Last OUT Time</string>
-    <string name="logOut">LogOut</string>
+    <string name="logOut">Log Out</string>
     <string name="clickHere">Click here to scan QR</string>
     <string name="remoteLogin">Log Remotely</string>
     <string name="customerName">Customer Name</string>
@@ -36,8 +36,8 @@
     <string name="snackInvalidUser">Invalid user.</string>
     <string name="snackSuccessful">is Successful</string>
     <string name="snackSimError">Unable to detect phone number. Please make sure SIM is inserted properly.</string>
-    <string name="alertCamera">Camera permission needed in order to proceed.You can do it in system settings for Presenti app.</string>
-    <string name="alertLocation">Location permission needed in order to proceed.You can do it in system settings for Presenti app.</string>
+    <string name="alertCamera">Camera permission needed in order to proceed. Using the camera you can read the barcode for login and logout. You can also do it in system settings for Presenti app.</string>
+    <string name="alertLocation">Location permission needed in order to proceed. Location is used to mark your attendance and we can make sure you are in the business premises. You can also do it in system settings for Presenti app.</string>
     <string name="languageSelect">Select Language</string>
     <string name="languageHindi">Hindi</string>
     <string name="languageMarathi">Marathi</string>
@@ -45,4 +45,5 @@
     <string name="logout">Log Out</string>
     <string name="alert">Alert</string>
     <string name="gpsError">Please turn on location services to continue for login.</string>
+    <string name="switchCamera">Switch Camera</string>
 </resources>

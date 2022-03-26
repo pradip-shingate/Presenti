@@ -41,10 +41,10 @@ public class MerchantScannerActivity extends AppCompatActivity implements ZXingS
 
 
         Button switchCamera = new Button(this); //declare a button in layout for camera change option
-        switchCamera.setText("Switch Camera");
+        switchCamera.setText(getResources().getString(R.string.switchCamera));
         switchCamera.setLayoutParams(params);
         switchCamera.setBackgroundResource(R.drawable.button_style);
-        switchCamera.setPadding(15,0,15,0);
+        switchCamera.setPadding(15, 0, 15, 0);
         relativeLayout.addView(switchCamera);
         final int i = getFrontCameraId();
         if (i == -1) {
@@ -112,11 +112,11 @@ public class MerchantScannerActivity extends AppCompatActivity implements ZXingS
     @Override
     public void handleResult(Result rawResult) {
 
-        String txt=rawResult.getText();
-        Log.d("barcode","Barcode :"+txt);
-        Intent intent=new Intent();
-        intent.putExtra("barcode_data",txt);
-        setResult(007,intent);
+        String txt = rawResult.getText();
+        Log.d("barcode", "Barcode :" + txt);
+        Intent intent = new Intent();
+        intent.putExtra("barcode_data", txt);
+        setResult(007, intent);
         finish();
     }
 }

@@ -10,9 +10,34 @@ class EmployeePrefs {
 
     companion object {
         private const val PREF_ID = "EMPLOYEE_DETAILS"
+        private const val KEY_VALID = "KEY_VALID"
         private const val KEY_EMPLOYEE = "KEY_EMPLOYEE"
         private const val KEY_BUSINESS = "KEY_BUSINESS"
         private const val KEY_LANGUAGE = "KEY_LANGUAGE"
+
+        fun setValid(context: Context, isValid: Boolean) {
+            val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
+                PREF_ID,
+                Context.MODE_PRIVATE
+            )
+            val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+            editor.putBoolean(KEY_VALID, isValid)
+            editor.commit()
+        }
+
+        fun getValid(context: Context): Boolean {
+            try {
+                val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
+                    PREF_ID,
+                    Context.MODE_PRIVATE
+                )
+                val isValid =
+                    sharedPreferences?.getBoolean(KEY_VALID, false)
+                return isValid == true
+            } catch (e: Exception) {
+            }
+            return false
+        }
 
         fun saveEmployeeDetails(
             context: Context,
@@ -80,6 +105,7 @@ class EmployeePrefs {
                 )
                 sharedPreferences?.edit()?.remove(KEY_EMPLOYEE)?.commit()
                 sharedPreferences?.edit()?.remove(KEY_BUSINESS)?.commit()
+                sharedPreferences?.edit()?.remove(KEY_VALID)?.commit()
             } catch (e: Exception) {
             }
         }
@@ -97,13 +123,13 @@ class EmployeePrefs {
             }
         }
 
-        fun getLanguage(context: Context):String? {
+        fun getLanguage(context: Context): String? {
             try {
                 val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
                     PREF_ID,
                     Context.MODE_PRIVATE
                 )
-               return sharedPreferences?.getString(KEY_LANGUAGE, "en")
+                return sharedPreferences?.getString(KEY_LANGUAGE, "en")
             } catch (e: Exception) {
             }
             return "en"

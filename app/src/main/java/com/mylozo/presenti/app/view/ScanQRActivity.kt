@@ -87,13 +87,20 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
     private var markAttendanceActivityResultLauncher = registerForActivityResult(
         StartActivityForResult()
     ) { result ->
-        val str = result.data?.getBooleanExtra("isSuccess", false)
-        val type = result.data?.getStringExtra("type")
+        val code = result.resultCode
+        var noteUpdated = false
+        noteUpdated = result.data?.getBooleanExtra("noteUpdated", false) == true
+        if (code==480 && noteUpdated) {
+            showSnackBar(resources.getString(R.string.snackNoteUpdate))
+        } else {
+            val str = result.data?.getBooleanExtra("isSuccess", false)
+            val type = result.data?.getStringExtra("type")
 
-        if (str == true && type.equals("Log In"))
-            showSnackBar(resources.getString(R.string.login) + " " + resources.getString(R.string.snackSuccessful))
-        else if (str == true && type.equals("Log Out"))
-            showSnackBar(resources.getString(R.string.logout) + " " + resources.getString(R.string.snackSuccessful))
+            if (str == true && type.equals("Log In"))
+                showSnackBar(resources.getString(R.string.login) + " " + resources.getString(R.string.snackSuccessful))
+            else if (str == true && type.equals("Log Out"))
+                showSnackBar(resources.getString(R.string.logout) + " " + resources.getString(R.string.snackSuccessful))
+        }
     }
 
     private var localeActivityResultLauncher = registerForActivityResult(
@@ -159,10 +166,9 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                     )
 
                 } else {
-                    ActivityCompat.requestPermissions(
-                        this@ScanQRActivity,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        REQUEST_LOCATION_PERMISSION
+                    showAlertMessageForPermissions(
+                        "Presenti",
+                        resources.getString(R.string.alertLocation), true
                     )
                 }
             } catch (e: IOException) {
@@ -200,10 +206,9 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                 ) {
                     checkLocationPermission()
                 } else {
-                    ActivityCompat.requestPermissions(
-                        this@ScanQRActivity,
-                        arrayOf(Manifest.permission.CAMERA),
-                        REQUEST_CAMERA_PERMISSION
+                    showAlertMessageForPermissions(
+                        "Presenti",
+                        resources.getString(R.string.alertCamera), false
                     )
                 }
             } catch (e: IOException) {
@@ -235,5 +240,34 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         findViewById<ImageView>(R.id.language).setOnClickListener {
             localeActivityResultLauncher.launch(Intent(this, LanguageSelectorActivity::class.java))
         }
+    }
+
+    private fun showAlertMessageForPermissions(
+        title: String,
+        message: String,
+        isLocation: Boolean
+    ) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@ScanQRActivity)
+        builder.setMessage(message).setTitle(title)
+            .setCancelable(false)
+            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+                dialog.dismiss()
+
+                if (isLocation) {
+                    ActivityCompat.requestPermissions(
+                        this@ScanQRActivity,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        REQUEST_LOCATION_PERMISSION
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this@ScanQRActivity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        REQUEST_CAMERA_PERMISSION
+                    )
+                }
+            })
+        val alert: AlertDialog = builder.create()
+        alert.show()
     }
 }

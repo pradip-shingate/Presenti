@@ -28,8 +28,8 @@
     <string name="snackdistanceError">व्यवसायापासून दूर जाताना त्रुटी.</string>
     <string name="snackInvalidUser">अवैध वापरकर्ता.</string>
     <string name="snackSuccessful">यशस्वी झाले आहे</string>
-    <string name="alertCamera">पुढे जाण्यासाठी कॅमेरा परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
-    <string name="alertLocation">पुढे जाण्यासाठी स्थान परवानगी आवश्यक आहे. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
+    <string name="alertCamera">पुढे जाण्यासाठी कॅमेरा परवानगी आवश्यक आहे. कॅमेरा वापरून तुम्ही लॉगिन आणि लॉगआउट साठी बारकोड वाचू शकता. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
+    <string name="alertLocation">पुढे जाण्यासाठी स्थान परवानगी आवश्यक आहे. तुमची उपस्थिती चिन्हांकित करण्यासाठी स्थान वापरले जाते आणि आम्ही खात्री करू शकतो की तुम्ही व्यवसायाच्या परिसरात आहात. तुम्ही ते Presenti ॲपसाठी सिस्टम सेटिंग्जमध्ये करू शकता.</string>
     <string name="snackSimError">फोन नंबर शोधण्यात अक्षम. कृपया सिम योग्यरित्या घातल्याचे सुनिश्चित करा.</string>
     <string name="languageSelect">भाषा निवडा</string>
     <string name="languageHindi">हिंदी</string>
@@ -39,4 +39,5 @@
     <string name="snackCustomerphone">कृपया दहा अंकी फोन नंबर टाका.</string>
     <string name="alert">अलर्ट</string>
     <string name="gpsError">लॉगिन सुरू ठेवण्यासाठी कृपया स्थान सेवा चालू करा.</string>
+    <string name="switchCamera">कॅमेरा स्विच करा</string>
 </resources>

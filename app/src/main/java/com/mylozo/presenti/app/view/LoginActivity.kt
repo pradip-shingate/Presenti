@@ -129,6 +129,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                 if (!it?.isError) {
                     EmployeeRepository.business = it
                     EmployeePrefs.saveBusinessDetails(this@LoginActivity, it)
+                    EmployeePrefs.setValid(this@LoginActivity, true)
                     runOnUiThread {
                         findViewById<ProgressBar>(R.id.progress).visibility = View.GONE
                         startActivity(Intent(this, ScanQRActivity::class.java))

@@ -102,7 +102,7 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
             return fmtOut.format(date)
         } catch (e: Exception) {
         }
-        return null
+        return "N/A"
     }
 
     private fun getFormattedDate(): String? {
@@ -111,7 +111,7 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
             return fmtOut.format(Date(System.currentTimeMillis()))
         } catch (e: Exception) {
         }
-        return ""
+        return "N/A"
     }
 
     private fun isPermissionGranted(): Boolean {
@@ -343,7 +343,10 @@ class MarkAttendanceActivity : AppCompatActivity(), NetworkResponseListener {
         var noteUpdated = false
         noteUpdated = result.data?.getBooleanExtra("noteUpdated", false) == true
         if (code == 480 && noteUpdated) {
-            showSnackBar(resources.getString(R.string.snackNoteUpdate))
+            val intent = Intent()
+            intent.putExtra("noteUpdated", noteUpdated)
+            setResult(480, intent)
+            onBackPressed()
         }
     }
 

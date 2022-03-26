@@ -11,25 +11,29 @@
         android:id="@+id/image_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-180dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="-5dp"
+        android:scaleType="fitStart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bg" />
+        app:srcCompat="@drawable/top_green" />
 
     <ImageView
         android:id="@+id/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginBottom="38dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_bg"
-        app:layout_constraintStart_toStartOf="@+id/image_bg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="-20dp"
+        app:layout_constraintEnd_toEndOf="@id/image_bg"
+        app:layout_constraintStart_toStartOf="@id/image_bg"
+        app:layout_constraintBottom_toBottomOf="@id/image_bg"
+        app:layout_constraintTop_toTopOf="@id/image_bg"
         app:srcCompat="@drawable/splash_image" />
 
     <TextView
         android:id="@+id/text_staff_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
@@ -39,7 +43,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_bg" />
+        app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
     <EditText
         android:id="@+id/editTextPhone"
@@ -75,9 +79,9 @@
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:indeterminateTint="#6db300"
             android:visibility="gone"
-            android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone">

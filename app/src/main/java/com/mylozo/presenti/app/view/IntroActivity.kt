@@ -21,8 +21,7 @@ class IntroActivity : AppCompatActivity() {
 
         val txtView = findViewById<TextView>(R.id.text_next)
         txtView.setOnClickListener {
-            val employee = EmployeePrefs.getEmployeeDetails(this@IntroActivity)
-            if (employee.data?.empAutoId!! > 0 && !TextUtils.isEmpty(employee.data?.empMobileNo)) {
+            if (EmployeePrefs.getValid(this)) {
                 EmployeeRepository.employee = EmployeePrefs.getEmployeeDetails(this@IntroActivity)
                 EmployeeRepository.business = EmployeePrefs.getBusinessDetails(this@IntroActivity)
                 startActivity(Intent(this@IntroActivity, ScanQRActivity::class.java))
