@@ -27,8 +27,9 @@ import java.io.IOException
 
 class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
 
-    val REQUEST_CAMERA_PERMISSION = 700;
+    val REQUEST_CAMERA_PERMISSION = 700
     val REQUEST_LOCATION_PERMISSION = 701
+    var isFromLocation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +43,29 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            checkLocationPermission()
+            checkLocationPermission(false)
         } else if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             showAlertMessage(
                 "Presenti",
                 resources.getString(R.string.alertCamera)
             )
         } else if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            someActivityResultLauncher.launch(
-                Intent(
-                    this@ScanQRActivity,
-                    MerchantScannerActivity::class.java
+            if (!isFromLocation) {
+                someActivityResultLauncher.launch(
+                    Intent(
+                        this@ScanQRActivity,
+                        MerchantScannerActivity::class.java
+                    )
                 )
-            )
+            } else {
+                markAttendanceActivityResultLauncher.launch(
+                    Intent(
+                        this@ScanQRActivity,
+                        MarkAttendanceActivity::class.java
+                    )
+                )
+            }
+            isFromLocation = false
 
         } else if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             showAlertMessage(
@@ -90,7 +101,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         val code = result.resultCode
         var noteUpdated = false
         noteUpdated = result.data?.getBooleanExtra("noteUpdated", false) == true
-        if (code==480 && noteUpdated) {
+        if (code == 480 && noteUpdated) {
             showSnackBar(resources.getString(R.string.snackNoteUpdate))
         } else {
             val str = result.data?.getBooleanExtra("isSuccess", false)
@@ -150,7 +161,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         snackBar.show()
     }
 
-    private fun checkLocationPermission() {
+    private fun checkLocationPermission(isFromLogRemotely:Boolean) {
         if (EmployeeRepository.business.data?.attendanceLogTypeId == 2) {
             try {
                 if (ActivityCompat.checkSelfPermission(
@@ -158,14 +169,26 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                         Manifest.permission.ACCESS_FINE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    someActivityResultLauncher.launch(
-                        Intent(
-                            this@ScanQRActivity,
-                            MerchantScannerActivity::class.java
+                    if(!isFromLogRemotely) {
+                        someActivityResultLauncher.launch(
+                            Intent(
+                                this@ScanQRActivity,
+                                MerchantScannerActivity::class.java
+                            )
                         )
-                    )
+                    }else
+                    {
+                        markAttendanceActivityResultLauncher.launch(
+                            Intent(
+                                this@ScanQRActivity,
+                                MarkAttendanceActivity::class.java
+                            )
+                        )
+                    }
 
                 } else {
+                    if(isFromLogRemotely)
+                        isFromLocation=true
                     showAlertMessageForPermissions(
                         "Presenti",
                         resources.getString(R.string.alertLocation), true
@@ -197,23 +220,8 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
 
         val qrImage = findViewById<ImageView>(R.id.barcode)
         qrImage.setOnClickListener {
+            validatePermissions()
 
-            try {
-                if (ActivityCompat.checkSelfPermission(
-                        this@ScanQRActivity,
-                        Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    checkLocationPermission()
-                } else {
-                    showAlertMessageForPermissions(
-                        "Presenti",
-                        resources.getString(R.string.alertCamera), false
-                    )
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
         }
 
         val buttonLogOut = findViewById<ImageView>(R.id.log_out)
@@ -226,12 +234,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         buttonRemoteLogin.isEnabled =
             EmployeeRepository.business.data?.isBusinessLocationDetect != 1
         buttonRemoteLogin.setOnClickListener {
-            markAttendanceActivityResultLauncher.launch(
-                Intent(
-                    this@ScanQRActivity,
-                    MarkAttendanceActivity::class.java
-                )
-            )
+           checkLocationPermission(true)
         }
 
         findViewById<TextView>(R.id.user_name).text =
@@ -269,5 +272,24 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
             })
         val alert: AlertDialog = builder.create()
         alert.show()
+    }
+
+    private fun validatePermissions() {
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    this@ScanQRActivity,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                checkLocationPermission(false)
+            } else {
+                showAlertMessageForPermissions(
+                    "Presenti",
+                    resources.getString(R.string.alertCamera), false
+                )
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
