@@ -27,7 +27,7 @@
         android:layout_marginEnd="26dp"
         android:text="@string/nextText"
         style="@style/Theme.textColor"
-        android:textSize="20sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
