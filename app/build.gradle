@@ -20,8 +20,8 @@ android {
         applicationId "com.mylozo.presenti.app"
         minSdk 21
         targetSdk 31
-        versionCode 1803202220
-        versionName "1.0.8"
+        versionCode 1803202221
+        versionName "1.0.9"
 
         archivesBaseName = "Presenti_v${versionName}_(${versionCode})"
 

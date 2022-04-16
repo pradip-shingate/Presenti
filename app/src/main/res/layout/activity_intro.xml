@@ -13,9 +13,9 @@
         android:layout_marginStart="22dp"
         android:layout_marginTop="20dp"
         android:text="Mark Your Presence."
+        style="@style/Theme.textMarkPresence"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="#2f2c73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_name_logo" />
 
@@ -26,7 +26,7 @@
         android:layout_marginTop="45dp"
         android:layout_marginEnd="26dp"
         android:text="@string/nextText"
-        android:textColor="@color/black"
+        style="@style/Theme.textColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="22dp"
+        style="@style/Theme.graphic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/name_logo" />

@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/top_green" />
+        style="@style/Theme.topGreenImage" />
 
     <ImageView
         android:id="@+id/image_logo"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="@id/image_bg"
         app:layout_constraintBottom_toBottomOf="@id/image_bg"
         app:layout_constraintTop_toTopOf="@id/image_bg"
-        app:srcCompat="@drawable/splash_image" />
+        style="@style/Theme.splashBelowTopGreen" />
 
     <TextView
         android:id="@+id/text_staff_login"
@@ -38,7 +38,7 @@
         android:cursorVisible="false"
         android:focusable="false"
         android:text="@string/staffLogintText"
-        android:textColor="#2f2c73"
+        style="@style/Theme.textMarkPresence"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

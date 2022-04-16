@@ -46,4 +46,20 @@
         <item name="tint"> @color/black</item>
     </style>
 
+    <style name="Theme.textColor" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:textColor"> @color/black</item>
+    </style>
+
+    <style name="Theme.textMarkPresence" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:textColor">#2f2c73</item>
+    </style>
+
+    <style name="Theme.topGreenImage" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:src">@drawable/top_green</item>
+    </style>
+
+    <style name="Theme.splashBelowTopGreen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:src">@drawable/splash_image</item>
+    </style>
+
 </resources>
