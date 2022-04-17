@@ -46,4 +46,6 @@
     <string name="alert">Alert</string>
     <string name="gpsError">Please turn on location services to continue for login.</string>
     <string name="switchCamera">Switch Camera</string>
+
+    <string name="hyperlink"><a href="https://www.presenti.co.in">Contact Us</a></string>
 </resources>

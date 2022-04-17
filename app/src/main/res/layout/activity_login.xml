@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_staff_login" />
 
     <FrameLayout
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -89,5 +90,19 @@
         </ProgressBar>
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/contact_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Theme.textColor"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/hyperlink"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button">
+
+    </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

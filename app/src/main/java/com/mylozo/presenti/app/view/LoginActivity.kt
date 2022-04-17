@@ -3,12 +3,14 @@ package com.mylozo.presenti.app.view
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
@@ -17,6 +19,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.mylozo.presenti.app.R
 import com.mylozo.presenti.app.model.*
 import com.mylozo.presenti.app.presenter.NetworkResponseListener
+import android.text.Html
+
+import android.text.method.LinkMovementMethod
+
+
+
 
 
 class LoginActivity : AppCompatActivity(), NetworkResponseListener {
@@ -59,6 +67,9 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
             }.start()
 
         }
+
+        val contactUs=findViewById<TextView>(R.id.contact_us)
+        contactUs.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

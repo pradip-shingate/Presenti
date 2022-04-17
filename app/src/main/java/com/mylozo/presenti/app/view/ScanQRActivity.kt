@@ -161,7 +161,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         snackBar.show()
     }
 
-    private fun checkLocationPermission(isFromLogRemotely:Boolean) {
+    private fun checkLocationPermission(isFromLogRemotely: Boolean) {
         if (EmployeeRepository.business.data?.attendanceLogTypeId == 2) {
             try {
                 if (ActivityCompat.checkSelfPermission(
@@ -169,15 +169,14 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                         Manifest.permission.ACCESS_FINE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    if(!isFromLogRemotely) {
+                    if (!isFromLogRemotely) {
                         someActivityResultLauncher.launch(
                             Intent(
                                 this@ScanQRActivity,
                                 MerchantScannerActivity::class.java
                             )
                         )
-                    }else
-                    {
+                    } else {
                         markAttendanceActivityResultLauncher.launch(
                             Intent(
                                 this@ScanQRActivity,
@@ -187,8 +186,8 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
                     }
 
                 } else {
-                    if(isFromLogRemotely)
-                        isFromLocation=true
+                    if (isFromLogRemotely)
+                        isFromLocation = true
                     showAlertMessageForPermissions(
                         "Presenti",
                         resources.getString(R.string.alertLocation), true
@@ -215,6 +214,12 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
     }
 
     private fun initUI() {
+
+        if (EmployeePrefs.getValid(this)) {
+            EmployeeRepository.employee = EmployeePrefs.getEmployeeDetails(this)
+            EmployeeRepository.business = EmployeePrefs.getBusinessDetails(this)
+        }
+
         findViewById<TextView>(R.id.company_name).text =
             EmployeeRepository.business.data?.businessName
 
@@ -234,7 +239,7 @@ class ScanQRActivity : AppCompatActivity(), NetworkResponseListener {
         buttonRemoteLogin.isEnabled =
             EmployeeRepository.business.data?.isBusinessLocationDetect != 1
         buttonRemoteLogin.setOnClickListener {
-           checkLocationPermission(true)
+            checkLocationPermission(true)
         }
 
         findViewById<TextView>(R.id.user_name).text =

@@ -40,4 +40,5 @@
     <string name="alert">चेतावनी</string>
     <string name="gpsError">लॉगिन जारी रखने के लिए कृपया स्थान सेवाओं को चालू करें।</string>
     <string name="switchCamera">कैमरा स्विच करें</string>
+    <string name="hyperlink"><a href="https://www.geeksforgeeks.org/">संपर्क करें</a></string>
 </resources>
