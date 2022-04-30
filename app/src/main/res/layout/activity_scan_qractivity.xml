@@ -7,6 +7,143 @@
     android:layout_height="match_parent"
     tools:context=".view.ScanQRActivity">
 
+    <RelativeLayout
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#75000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/overlay_lang"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="90dp"
+            android:src="@drawable/select_language">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overlay_lang"
+            android:layout_marginTop="-18dp"
+            android:paddingLeft="10dp"
+            android:text="Click here to select language"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/overlay_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:visibility="invisible"
+            android:src="@drawable/select_logout">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/click_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overlay_logout"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="-18dp"
+            android:text="Click here to logout"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/overlay_qr"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/click_logout"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="55dp"
+            android:layout_marginRight="20dp"
+            android:visibility="invisible"
+            android:src="@drawable/select_qr">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_scan_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overlay_qr"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="-18dp"
+            android:text="Click here to scan QR"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/overlay_logremote"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/overlay_qr"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginRight="20dp"
+            android:visibility="invisible"
+            android:src="@drawable/select_logremote">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_logremote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overlay_logremote"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="-5dp"
+            android:text="Click here to log remotely"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/next_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:layout_alignParentRight="true"
+            android:text="Next"
+            android:textSize="25sp">
+
+        </TextView>
+
+
+    </RelativeLayout>
+
     <include
         layout="@layout/top_header"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,11 +168,11 @@
 
     <TextView
         android:id="@+id/log_attendance"
+        style="@style/Theme.textColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:text="@string/logAttendance"
-        style="@style/Theme.textColor"
         android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,11 +181,11 @@
 
     <TextView
         android:id="@+id/user_name"
+        style="@style/Theme.textColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:text="Hi "
-        style="@style/Theme.textColor"
         android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -60,9 +197,9 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
-        android:padding="5dp"
         android:background="@drawable/qr_border"
         android:cropToPadding="true"
+        android:padding="5dp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -71,10 +208,10 @@
 
     <TextView
         android:id="@+id/click_here"
+        style="@style/Theme.textColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clickHere"
-        style="@style/Theme.textColor"
         android:textSize="15sp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"

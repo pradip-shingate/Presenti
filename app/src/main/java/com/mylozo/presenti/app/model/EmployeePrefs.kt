@@ -14,6 +14,7 @@ class EmployeePrefs {
         private const val KEY_EMPLOYEE = "KEY_EMPLOYEE"
         private const val KEY_BUSINESS = "KEY_BUSINESS"
         private const val KEY_LANGUAGE = "KEY_LANGUAGE"
+        private const val KEY_INFO_OVERLAY = "KEY_INFO_OVERLAY"
 
         fun setValid(context: Context, isValid: Boolean) {
             val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
@@ -133,6 +134,30 @@ class EmployeePrefs {
             } catch (e: Exception) {
             }
             return "en"
+        }
+
+        fun setInfoOverlay(context: Context, isDone: Boolean) {
+            val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
+                PREF_ID,
+                Context.MODE_PRIVATE
+            )
+            val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+            editor.putBoolean(KEY_INFO_OVERLAY, isDone)
+            editor.commit()
+        }
+
+        fun getInfoOverlay(context: Context): Boolean {
+            try {
+                val sharedPreferences: SharedPreferences? = context.getSharedPreferences(
+                    PREF_ID,
+                    Context.MODE_PRIVATE
+                )
+                val isValid =
+                    sharedPreferences?.getBoolean(KEY_INFO_OVERLAY,false)
+                return isValid == true
+            } catch (e: Exception) {
+            }
+            return false
         }
     }
 }
