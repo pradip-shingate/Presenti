@@ -46,6 +46,8 @@
     <string name="alert">Alert</string>
     <string name="gpsError">Please turn on location services to continue for login.</string>
     <string name="switchCamera">Switch Camera</string>
+    <string name="phone_state_permission">In order to read phone number we will need read phone state permission.Please go in settings and grant the permission for phone and restart the app.</string>
+    <string name="phone_state">In order to read phone number we will need read phone state permission.</string>
 
     <string name="hyperlink"><a href="https://www.presenti.co.in">Contact Us</a></string>
 </resources>

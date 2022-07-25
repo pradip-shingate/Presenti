@@ -41,4 +41,6 @@
     <string name="gpsError">लॉगिन सुरू ठेवण्यासाठी कृपया स्थान सेवा चालू करा.</string>
     <string name="switchCamera">कॅमेरा स्विच करा</string>
     <string name="hyperlink"><a href="https://www.geeksforgeeks.org/">आमच्याशी संपर्क साधा</a></string>
+    <string name="phone_state_permission">फोन नंबर वाचण्यासाठी आम्हाला फोन स्टेट परवानगी वाचण्याची आवश्यकता असेल. कृपया सेटिंग्जमध्ये जा आणि फोनसाठी परवानगी द्या आणि अॅप रीस्टार्ट करा</string>
+    <string name="phone_state">फोन नंबर वाचण्यासाठी आम्हाला फोन स्टेट रीड परवानगी आवश्यक आहे</string>
 </resources>
