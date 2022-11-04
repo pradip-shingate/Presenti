@@ -2,6 +2,7 @@ package com.mylozo.presenti.app.view
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,10 +13,9 @@ import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
         editText.showSoftInputOnFocus = false
         editText.setOnTouchListener { v, event ->
             when (event?.action) {
+
                 MotionEvent.ACTION_DOWN -> getPhoneNumbers()
             }
             v?.onTouchEvent(event) ?: true
@@ -52,28 +53,33 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
         loginButton = findViewById(R.id.button_continue)
         loginButton.setOnClickListener {
-            findViewById<Button>(R.id.button_continue).isEnabled = false
-            findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
-            var phone = ""
-            phoneNumber?.let { value ->
-                phone = if (value.startsWith("+91")) {
-                    value.substring(3, value.length)
-                } else if (value.length == 12 && value.startsWith("91")) {
-                    value.substring(2, value.length)
-                } else if (value.length == 11 && value.startsWith("0")) {
-                    value.substring(1, value.length)
-                } else {
-                    value
+            val number=editText.text
+            if(!TextUtils.isEmpty(number) && TextUtils.isDigitsOnly(number) && number.length==12) {
+                findViewById<Button>(R.id.button_continue).isEnabled = false
+                findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
+                var phone = ""
+                phoneNumber?.let { value ->
+                    phone = if (value.startsWith("+91")) {
+                        value.substring(3, value.length)
+                    } else if (value.length == 12 && value.startsWith("91")) {
+                        value.substring(2, value.length)
+                    } else if (value.length == 11 && value.startsWith("0")) {
+                        value.substring(1, value.length)
+                    } else {
+                        value
+                    }
                 }
+
+                Thread {
+                    NetworkHelper().validateUser(
+                        resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phone",
+                        this
+                    )
+                }.start()
+            }else
+            {
+                showSnackBar("Please enter valid phone number.")
             }
-
-            Thread {
-                NetworkHelper().validateUser(
-                    resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phone",
-                    this
-                )
-            }.start()
-
         }
 
         val contactUs = findViewById<TextView>(R.id.contact_us)
@@ -101,6 +107,9 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
     }
 
     private fun getPhoneNumbers() {
+
+        if(editText.showSoftInputOnFocus)
+            return
 
         val hintRequest = HintRequest.Builder()
             .setPhoneNumberIdentifierSupported(true)
@@ -138,6 +147,8 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                     } else {
                         showSnackBar(resources.getString(R.string.snackSimError))
                         findViewById<Button>(R.id.button_continue).isEnabled = false
+                        //write code here for OTP functionality
+                        getPhoneNumberManually()
                     }
                 }
             } else {
@@ -147,7 +158,20 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                 );
             }
         } catch (e: Exception) {
+            getPhoneNumberManually()
         }
+    }
+
+    private fun getPhoneNumberManually()
+    {
+        editText.showSoftInputOnFocus = true
+        findViewById<Button>(R.id.button_continue).isEnabled = true
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        val keyboard: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        keyboard.showSoftInput(editText, 0)
+        findViewById<Spinner>(R.id.country).visibility=View.VISIBLE
+        loginButton.text = "Send OTP"
     }
 
     override fun onRequestPermissionsResult(

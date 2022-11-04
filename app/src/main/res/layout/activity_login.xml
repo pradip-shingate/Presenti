@@ -45,17 +45,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="@string/staffPhoneNumber"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_staff_login" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_staff_login">
+
+        <Spinner
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:spinnerMode="dropdown"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:entries="@array/countries"
+            android:visibility="gone">
+
+        </Spinner>
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="@string/staffPhoneNumber"
+            android:inputType="phone" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/login_button"
@@ -64,7 +85,7 @@
         android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone">
+        app:layout_constraintTop_toBottomOf="@+id/phone">
 
         <Button
             android:id="@+id/button_continue"
