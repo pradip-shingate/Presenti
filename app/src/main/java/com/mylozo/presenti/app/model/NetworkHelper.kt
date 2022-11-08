@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.mylozo.presenti.app.presenter.NetworkResponseListener
 import com.squareup.okhttp.*
+import org.json.JSONObject
 import java.io.IOException
 import java.lang.reflect.Type
 import java.security.SecureRandom
@@ -44,6 +45,51 @@ class NetworkHelper {
         }
     }
 
+    fun sendOTP(
+        url: String,
+        phone: String,
+        otp: String,
+        businessID: String,
+        networkResponseListener: NetworkResponseListener
+    ) {
+        try {
+            val okHttpClient: OkHttpClient? = getOkHttpClient()
+
+            val json: JSONObject = JSONObject()
+            json.put("MobileNo", phone)
+            json.put("Otp", otp)
+            json.put("BusinessId", businessID)
+            val requestBody: RequestBody = RequestBody.create(JSON, json.toString())
+
+            val request = Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build()
+
+            okHttpClient?.newCall(request)?.enqueue(object : Callback {
+                override fun onFailure(request: Request?, e: IOException?) {
+                    Log.d("Failed", "Success but failed.${e?.message}")
+                    networkResponseListener.onNetworkFailure(null)
+                }
+
+                override fun onResponse(response: Response?) {
+
+                    if (response?.isSuccessful == true) {
+                        val type: Type = object : TypeToken<UserOTPDetails?>() {}.type
+                        val user: UserOTPDetails? =
+                            Gson().fromJson(response?.body()!!.string(), type)
+                        networkResponseListener.onNetworkSuccess(user)
+                    } else {
+                        networkResponseListener.onNetworkFailure(null)
+                    }
+                }
+            })
+        } catch (e: Exception) {
+            networkResponseListener.onNetworkFailure(null)
+        }
+    }
+
+
     fun getUserDetails(url: String, networkResponseListener: NetworkResponseListener) {
         try {
             val okHttpClient: OkHttpClient? = getOkHttpClient()
@@ -61,7 +107,8 @@ class NetworkHelper {
 
                     if (response?.isSuccessful == true) {
                         val type: Type = object : TypeToken<EmployeeDetails?>() {}.type
-                        val user: EmployeeDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        val user: EmployeeDetails? =
+                            Gson().fromJson(response?.body()!!.string(), type)
                         networkResponseListener.onNetworkSuccess(user)
                     }
                 }
@@ -88,7 +135,8 @@ class NetworkHelper {
 
                     if (response?.isSuccessful == true) {
                         val type: Type = object : TypeToken<UserPresentiDetail?>() {}.type
-                        val user: UserPresentiDetail? = Gson().fromJson(response?.body()!!.string(), type)
+                        val user: UserPresentiDetail? =
+                            Gson().fromJson(response?.body()!!.string(), type)
                         networkResponseListener.onNetworkSuccess(user)
                     }
                 }
@@ -115,7 +163,8 @@ class NetworkHelper {
 
                     if (response?.isSuccessful == true) {
                         val type: Type = object : TypeToken<BusinessDetails?>() {}.type
-                        val user: BusinessDetails? = Gson().fromJson(response?.body()!!.string(), type)
+                        val user: BusinessDetails? =
+                            Gson().fromJson(response?.body()!!.string(), type)
                         networkResponseListener.onNetworkSuccess(user)
                     }
                 }
@@ -125,7 +174,11 @@ class NetworkHelper {
         }
     }
 
-    fun insertInOutLogs(url: String, json: String, networkResponseListener: NetworkResponseListener) {
+    fun insertInOutLogs(
+        url: String,
+        json: String,
+        networkResponseListener: NetworkResponseListener
+    ) {
         try {
             val okHttpClient: OkHttpClient? = getOkHttpClient()
 

@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
     private lateinit var loginButton: Button
     private var phoneNumber: String? = null
     private val REQUEST_PHONE_STATE_PERMISSION = 1200
+    private var otp:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +54,25 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
         loginButton = findViewById(R.id.button_continue)
         loginButton.setOnClickListener {
-            val number=editText.text
-            if(!TextUtils.isEmpty(number) && TextUtils.isDigitsOnly(number) && number.length==12) {
+
+            val isManual = editText.showSoftInputOnFocus
+            if (isManual) {
+                var number = editText.text.toString()
+                val combo = findViewById<Spinner>(R.id.country)
+                val country = combo.selectedItem as String
+                number = country + number
+                phoneNumber = number
+            }
+
+            if (!TextUtils.isEmpty(phoneNumber) && TextUtils.isDigitsOnly(phoneNumber) && (isManual && phoneNumber?.length == 12)) {
                 findViewById<Button>(R.id.button_continue).isEnabled = false
                 findViewById<ProgressBar>(R.id.progress).visibility = View.VISIBLE
                 var phone = ""
                 phoneNumber?.let { value ->
-                    phone = if (value.startsWith("+91")) {
+                    phone = if(isManual)
+                    {
+                        value
+                    }else if (value.startsWith("+91")) {
                         value.substring(3, value.length)
                     } else if (value.length == 12 && value.startsWith("91")) {
                         value.substring(2, value.length)
@@ -70,14 +83,23 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                     }
                 }
 
-                Thread {
-                    NetworkHelper().validateUser(
-                        resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phone",
-                        this
-                    )
-                }.start()
-            }else
-            {
+                if (!isManual) {
+                    Thread {
+                        NetworkHelper().validateUser(
+                            resources.getString(R.string.base_url) + "Business/GetBusinessIdByMobileNumber?MobileNumber=$phone",
+                            this
+                        )
+                    }.start()
+                } else {
+                    otp=randomOTPGenerator()
+                    Thread {
+                        NetworkHelper().sendOTP(
+                            resources.getString(R.string.base_url) + "Employee/SendOtpToMobileNumber?MobileNo=$phone&Otp=$otp&BusinessId=1",phone, otp.toString() ,"1",
+                            this
+                        )
+                    }.start()
+                }
+            } else {
                 showSnackBar("Please enter valid phone number.")
             }
         }
@@ -108,7 +130,7 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
 
     private fun getPhoneNumbers() {
 
-        if(editText.showSoftInputOnFocus)
+        if (editText.showSoftInputOnFocus)
             return
 
         val hintRequest = HintRequest.Builder()
@@ -162,15 +184,14 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
         }
     }
 
-    private fun getPhoneNumberManually()
-    {
+    private fun getPhoneNumberManually() {
         editText.showSoftInputOnFocus = true
         findViewById<Button>(R.id.button_continue).isEnabled = true
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         val keyboard: InputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.showSoftInput(editText, 0)
-        findViewById<Spinner>(R.id.country).visibility=View.VISIBLE
+        findViewById<Spinner>(R.id.country).visibility = View.VISIBLE
         loginButton.text = "Send OTP"
     }
 
@@ -278,6 +299,13 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
                 }
 
             }
+            else if (it is UserOTPDetails) {
+                if (!it?.isError) {
+                    showSnackBar("Please enter the received OTP.")
+                } else {
+                    showSnackBar("Please check if you have entered valid phone number.")
+                }
+            }
         }
     }
 
@@ -302,6 +330,14 @@ class LoginActivity : AppCompatActivity(), NetworkResponseListener {
         super.onConfigurationChanged(newConfig)
         Utility.loadLocale(this)
         setContentView(R.layout.activity_intro)
+    }
+
+    private fun randomOTPGenerator():Int
+    {
+        val min = 1000
+        val max = 9999
+        val b = (Math.random() * (max - min + 1) + min).toInt()
+        return b
     }
 
 }
